@@ -82,6 +82,14 @@
         .input-glow:focus {
             box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
         }
+
+        /* ── error shake ── */
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20%,60% { transform: translateX(-6px); }
+            40%,80% { transform: translateX(6px); }
+        }
+        .shake { animation: shake 0.4s ease; }
     </style>
   <style>body { box-sizing: border-box; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
@@ -114,14 +122,16 @@
       <h2 id="hero-heading" class="text-4xl md:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">Instant Responsive<br><span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Preview</span></h2>
       <p id="hero-description" class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">Test how your website looks across mobile, tablet, laptop, and desktop devices. One URL, all screen sizes, instant results.</p><!-- URL Input Form -->
       <form id="url-form" class="max-w-2xl mx-auto mb-16">
-       <div class="flex flex-col sm:flex-row gap-3 p-2 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100">
+       <div id="form-box" class="flex flex-col sm:flex-row gap-3 p-2 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100">
         <div class="flex-1 relative">
          <div class="absolute left-4 top-1/2 -translate-y-1/2">
           <svg width="20" height="20" viewbox="0 0 24 24" fill="none" class="text-slate-400"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" /> <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
-         </div><input type="url" placeholder="Enter your website URL..." class="input-glow w-full pl-12 pr-4 py-4 text-slate-800 placeholder-slate-400 bg-slate-50 rounded-xl border-0 outline-none transition-all text-base">
+         </div><input id="url-input" type="url" placeholder="https://example.com" class="input-glow w-full pl-12 pr-4 py-4 text-slate-800 placeholder-slate-400 bg-slate-50 rounded-xl border-0 outline-none transition-all text-base">
         </div><button type="submit" id="cta-button" class="cta-button px-8 py-4 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all whitespace-nowrap" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);"> Start Testing → </button>
        </div>
+       <!-- error hint -->
+       <p id="url-error" class="hidden mt-2 text-sm text-red-500 font-medium">⚠ Please enter a valid URL — e.g. https://example.com</p>
       </form><!-- Device Preview Mockup -->
       <div class="relative max-w-4xl mx-auto">
        <div class="flex items-end justify-center gap-4 md:gap-8"><!-- Mobile -->
@@ -280,7 +290,6 @@
             if (feature4Title) feature4Title.textContent = config.feature_4_title || defaultConfig.feature_4_title;
             if (footerText) footerText.textContent = config.footer_text || defaultConfig.footer_text;
 
-            // Apply colors
             const primaryColor = config.primary_color || defaultConfig.primary_color;
             const textColor = config.text_color || defaultConfig.text_color;
             const backgroundColor = config.background_color || defaultConfig.background_color;
@@ -356,29 +365,49 @@
             });
         }
 
-        // Form handling
+        // ── UPDATED FORM HANDLER ─────────────────────────────────────
         document.getElementById('url-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const input = this.querySelector('input');
-            const url = input.value.trim();
-            if (url) {
-                const button = document.getElementById('cta-button');
-                const originalText = button.textContent;
-                button.textContent = 'Loading...';
-                button.style.opacity = '0.7';
-                
-                setTimeout(() => {
-                    button.textContent = '✓ Ready!';
-                    button.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-                    
-                    setTimeout(() => {
-                        button.textContent = originalText;
-                        button.style.background = 'linear-gradient(135deg, #6366f1, #8b5cf6)';
-                        button.style.opacity = '1';
-                    }, 2000);
-                }, 1500);
+
+            const input   = document.getElementById('url-input');
+            const errorEl = document.getElementById('url-error');
+            const formBox = document.getElementById('form-box');
+            const button  = document.getElementById('cta-button');
+            let url       = input.value.trim();
+
+            // Auto-prepend https:// if the user forgot the scheme
+            if (url && !url.match(/^https?:\/\//i)) {
+                url = 'https://' + url;
+                input.value = url;
             }
+
+            // Basic URL validation
+            try {
+                new URL(url);
+            } catch (_) {
+                // Invalid URL — shake + show error
+                errorEl.classList.remove('hidden');
+                formBox.classList.add('shake');
+                formBox.addEventListener('animationend', () => formBox.classList.remove('shake'), { once: true });
+                input.focus();
+                return;
+            }
+
+            // Valid URL — hide any previous error
+            errorEl.classList.add('hidden');
+
+            // Button loading state
+            const originalText = button.textContent;
+            button.textContent = 'Loading…';
+            button.style.opacity = '0.75';
+            button.disabled = true;
+
+            // Short delay so the user sees the feedback, then navigate
+            setTimeout(() => {
+                localStorage.setItem('previewURL', url);   // ← key used by preview.html
+                window.location.href = 'preview.html';
+            }, 600);
         });
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ccd60a362c25539',t:'MTc3MDkxMjg1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ </body>
 </html>
