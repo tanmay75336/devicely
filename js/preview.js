@@ -13,12 +13,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const url = urlParams.get("url");
 
   if (url) {
-    saveTest(url, user.id);
+    await savePreview(url, user.id);
   }
+
 });
 
-async function saveTest(url, userId) {
-  await supabase.from("tests").insert([
+async function savePreview(url, userId) {
+  await supabase.from("previews").insert([
     {
       user_id: userId,
       url: url

@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Devicely — Dashboard</title>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="h-full bg-slate-50 overflow-auto">
 
   <div class="w-full min-h-full relative">
@@ -24,13 +28,14 @@
       <div class="max-w-6xl mx-auto flex items-center justify-between">
         <!-- Logo (identical to landing) -->
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg"
+            style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="4" width="20" height="14" rx="2" stroke="white" stroke-width="2"/>
-              <path d="M8 21h8" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <path d="M12 18v3" stroke="white" stroke-width="2" stroke-linecap="round"/>
-              <rect x="6" y="7" width="5" height="8" rx="1" fill="white" opacity="0.5"/>
-              <rect x="13" y="7" width="5" height="8" rx="1" fill="white" opacity="0.3"/>
+              <rect x="2" y="4" width="20" height="14" rx="2" stroke="white" stroke-width="2" />
+              <path d="M8 21h8" stroke="white" stroke-width="2" stroke-linecap="round" />
+              <path d="M12 18v3" stroke="white" stroke-width="2" stroke-linecap="round" />
+              <rect x="6" y="7" width="5" height="8" rx="1" fill="white" opacity="0.5" />
+              <rect x="13" y="7" width="5" height="8" rx="1" fill="white" opacity="0.3" />
             </svg>
           </div>
           <div>
@@ -41,10 +46,12 @@
         <!-- Nav right -->
         <div class="flex items-center gap-4">
           <div class="hidden sm:flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-md" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">U</div>
+            <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-md"
+              style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">U</div>
             <span class="text-sm font-medium text-slate-600">user@example.com</span>
           </div>
-          <button onclick="logout()" class="btn-primary text-sm font-semibold px-5 py-2.5 rounded-full shadow-md cursor-pointer">
+          <button onclick="logout()"
+            class="btn-primary text-sm font-semibold px-5 py-2.5 rounded-full shadow-md cursor-pointer">
             Logout
           </button>
         </div>
@@ -56,12 +63,15 @@
 
       <!-- Page heading -->
       <div class="mb-8">
-        <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100 mb-5">
+        <div
+          class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100 mb-5">
           <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
           <span class="text-xs font-medium text-slate-600">Test History</span>
         </div>
         <h2 class="text-4xl font-extrabold text-slate-900 mb-3 leading-tight">
-          Your <span class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Test History</span>
+          Your <span
+            class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 bg-clip-text text-transparent">Test
+            History</span>
         </h2>
         <p class="text-base text-slate-600 max-w-xl leading-relaxed">
           All your responsive preview tests in one place. Re-run, compare, or delete anytime.
@@ -70,20 +80,32 @@
 
       <!-- Stat cards (styled like feature cards from landing) -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <div class="stat-card bg-white rounded-2xl p-5 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
-          <div class="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent" id="stat-total">5</div>
+        <div
+          class="stat-card bg-white rounded-2xl p-5 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
+          <div
+            class="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+            id="stat-total">5</div>
           <div class="text-xs text-slate-500 font-medium mt-1">Total Tests</div>
         </div>
-        <div class="stat-card bg-white rounded-2xl p-5 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
-          <div class="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">3</div>
+        <div
+          class="stat-card bg-white rounded-2xl p-5 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
+          <div
+            class="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">3
+          </div>
           <div class="text-xs text-slate-500 font-medium mt-1">This Week</div>
         </div>
-        <div class="stat-card bg-white rounded-2xl p-5 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
-          <div class="text-3xl font-extrabold bg-gradient-to-r from-cyan-500 to-indigo-500 bg-clip-text text-transparent">12</div>
+        <div
+          class="stat-card bg-white rounded-2xl p-5 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
+          <div
+            class="text-3xl font-extrabold bg-gradient-to-r from-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+            12</div>
           <div class="text-xs text-slate-500 font-medium mt-1">Devices Tested</div>
         </div>
-        <div class="stat-card bg-white rounded-2xl p-5 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
-          <div class="text-3xl font-extrabold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">4</div>
+        <div
+          class="stat-card bg-white rounded-2xl p-5 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
+          <div
+            class="text-3xl font-extrabold bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">
+            4</div>
           <div class="text-xs text-slate-500 font-medium mt-1">Passed</div>
         </div>
       </div>
@@ -96,18 +118,21 @@
         <div class="flex items-center gap-3 flex-wrap">
           <div class="relative">
             <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
+                <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
             </div>
-            <input
-              id="search-input"
-              type="text"
-              placeholder="Search URLs…"
-              oninput="filterTests(this.value)"
-              class="input-glow pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-slate-400 transition-all w-52"
-            />
+            <input id="search-input" type="text" placeholder="Search URLs…" oninput="filterTests(this.value)"
+              class="input-glow pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 placeholder-slate-400 transition-all w-52" />
           </div>
-          <button onclick="showNewTest()" class="btn-primary text-sm font-semibold px-5 py-2.5 rounded-xl shadow-md flex items-center gap-2 cursor-pointer">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <button onclick="showNewTest()"
+            class="btn-primary text-sm font-semibold px-5 py-2.5 rounded-xl shadow-md flex items-center gap-2 cursor-pointer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
             New Test
           </button>
         </div>
@@ -117,10 +142,12 @@
       <div id="cards-container" class="flex flex-col gap-4">
 
         <!-- Card 1 -->
-        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100" data-id="1" data-url="https://stripe.com">
+        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100"
+          data-id="1" data-url="https://stripe.com">
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div class="flex items-start gap-4 min-w-0 flex-1">
-              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background: linear-gradient(135deg, #ede9fe, #c7d2fe);">🧾</div>
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                style="background: linear-gradient(135deg, #ede9fe, #c7d2fe);">🧾</div>
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2 mb-1">
                   <span class="font-bold text-slate-800 text-base">stripe.com</span>
@@ -130,25 +157,30 @@
                 <div class="flex flex-wrap gap-2">
                   <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">📱 Mobile</span>
                   <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">💻 Tablet</span>
-                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥 Desktop</span>
+                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥
+                    Desktop</span>
                 </div>
               </div>
             </div>
             <div class="flex flex-col items-end gap-3 flex-shrink-0">
               <span class="text-xs text-slate-400 whitespace-nowrap">Feb 20, 2026 · 9:14 AM</span>
               <div class="flex gap-2">
-                <button onclick="openPreview('https://stripe.com')" class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
-                <button onclick="deleteTest(1)" class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
+                <button onclick="openPreview('https://stripe.com')"
+                  class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
+                <button onclick="deleteTest(1)"
+                  class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Card 2 -->
-        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100" data-id="2" data-url="https://vercel.com">
+        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100"
+          data-id="2" data-url="https://vercel.com">
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div class="flex items-start gap-4 min-w-0 flex-1">
-              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0);">▲</div>
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0);">▲</div>
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2 mb-1">
                   <span class="font-bold text-slate-800 text-base">vercel.com</span>
@@ -157,25 +189,30 @@
                 <p class="text-xs text-slate-400 mb-3">https://vercel.com</p>
                 <div class="flex flex-wrap gap-2">
                   <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">📱 Mobile</span>
-                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥 Desktop</span>
+                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥
+                    Desktop</span>
                 </div>
               </div>
             </div>
             <div class="flex flex-col items-end gap-3 flex-shrink-0">
               <span class="text-xs text-slate-400 whitespace-nowrap">Feb 19, 2026 · 3:47 PM</span>
               <div class="flex gap-2">
-                <button onclick="openPreview('https://vercel.com')" class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
-                <button onclick="deleteTest(2)" class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
+                <button onclick="openPreview('https://vercel.com')"
+                  class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
+                <button onclick="deleteTest(2)"
+                  class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Card 3 -->
-        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100" data-id="3" data-url="https://linear.app">
+        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100"
+          data-id="3" data-url="https://linear.app">
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div class="flex items-start gap-4 min-w-0 flex-1">
-              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background: linear-gradient(135deg, #fdf4ff, #f3e8ff);">📐</div>
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                style="background: linear-gradient(135deg, #fdf4ff, #f3e8ff);">📐</div>
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2 mb-1">
                   <span class="font-bold text-slate-800 text-base">linear.app</span>
@@ -185,7 +222,8 @@
                 <div class="flex flex-wrap gap-2">
                   <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">📱 Mobile</span>
                   <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">💻 Tablet</span>
-                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥 Desktop</span>
+                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥
+                    Desktop</span>
                   <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">⌚ Watch</span>
                 </div>
               </div>
@@ -193,18 +231,22 @@
             <div class="flex flex-col items-end gap-3 flex-shrink-0">
               <span class="text-xs text-slate-400 whitespace-nowrap">Feb 18, 2026 · 11:02 AM</span>
               <div class="flex gap-2">
-                <button onclick="openPreview('https://linear.app')" class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
-                <button onclick="deleteTest(3)" class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
+                <button onclick="openPreview('https://linear.app')"
+                  class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
+                <button onclick="deleteTest(3)"
+                  class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Card 4 -->
-        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100" data-id="4" data-url="https://github.com">
+        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100"
+          data-id="4" data-url="https://github.com">
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div class="flex items-start gap-4 min-w-0 flex-1">
-              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0);">🐙</div>
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0);">🐙</div>
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2 mb-1">
                   <span class="font-bold text-slate-800 text-base">github.com</span>
@@ -213,25 +255,30 @@
                 <p class="text-xs text-slate-400 mb-3">https://github.com</p>
                 <div class="flex flex-wrap gap-2">
                   <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">📱 Mobile</span>
-                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥 Desktop</span>
+                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥
+                    Desktop</span>
                 </div>
               </div>
             </div>
             <div class="flex flex-col items-end gap-3 flex-shrink-0">
               <span class="text-xs text-slate-400 whitespace-nowrap">Feb 15, 2026 · 2:30 PM</span>
               <div class="flex gap-2">
-                <button onclick="openPreview('https://github.com')" class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
-                <button onclick="deleteTest(4)" class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
+                <button onclick="openPreview('https://github.com')"
+                  class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
+                <button onclick="deleteTest(4)"
+                  class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Card 5 -->
-        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100" data-id="5" data-url="https://figma.com">
+        <div class="test-card bg-white rounded-2xl p-6 shadow-lg shadow-slate-200/50 border border-slate-100"
+          data-id="5" data-url="https://figma.com">
           <div class="flex flex-wrap items-start justify-between gap-4">
             <div class="flex items-start gap-4 min-w-0 flex-1">
-              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0" style="background: linear-gradient(135deg, #fff0f3, #ffd6e0);">🎨</div>
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                style="background: linear-gradient(135deg, #fff0f3, #ffd6e0);">🎨</div>
               <div class="min-w-0 flex-1">
                 <div class="flex flex-wrap items-center gap-2 mb-1">
                   <span class="font-bold text-slate-800 text-base">figma.com</span>
@@ -240,15 +287,18 @@
                 <p class="text-xs text-slate-400 mb-3">https://figma.com</p>
                 <div class="flex flex-wrap gap-2">
                   <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">💻 Tablet</span>
-                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥 Desktop</span>
+                  <span class="text-xs font-medium text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg">🖥
+                    Desktop</span>
                 </div>
               </div>
             </div>
             <div class="flex flex-col items-end gap-3 flex-shrink-0">
               <span class="text-xs text-slate-400 whitespace-nowrap">Feb 10, 2026 · 8:55 AM</span>
               <div class="flex gap-2">
-                <button onclick="openPreview('https://figma.com')" class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
-                <button onclick="deleteTest(5)" class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
+                <button onclick="openPreview('https://figma.com')"
+                  class="btn-outline text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Open Preview</button>
+                <button onclick="deleteTest(5)"
+                  class="btn-danger text-xs font-semibold px-4 py-2 rounded-xl cursor-pointer">Delete</button>
               </div>
             </div>
           </div>
@@ -259,19 +309,22 @@
       <!-- ── Empty State ── -->
       <div id="empty-state" class="hidden">
         <div class="bg-white rounded-3xl p-16 shadow-lg shadow-slate-200/50 border border-slate-100 text-center">
-          <div class="empty-icon-wrap w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6" style="background: linear-gradient(135deg, #ede9fe, #c7d2fe);">
-            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2"/>
-              <line x1="8" y1="21" x2="16" y2="21"/>
-              <line x1="12" y1="17" x2="12" y2="21"/>
-              <path d="M9 9h6M9 12h3"/>
+          <div class="empty-icon-wrap w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6"
+            style="background: linear-gradient(135deg, #ede9fe, #c7d2fe);">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.7"
+              stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <line x1="8" y1="21" x2="16" y2="21" />
+              <line x1="12" y1="17" x2="12" y2="21" />
+              <path d="M9 9h6M9 12h3" />
             </svg>
           </div>
           <h3 class="text-2xl font-extrabold text-slate-900 mb-3">No tests yet</h3>
           <p class="text-slate-500 text-sm max-w-xs mx-auto leading-relaxed mb-8">
             Preview any website across dozens of screen sizes and devices. Start your first test now.
           </p>
-          <button onclick="showNewTest()" class="btn-primary font-semibold px-8 py-3.5 rounded-full shadow-lg text-sm cursor-pointer">
+          <button onclick="showNewTest()"
+            class="btn-primary font-semibold px-8 py-3.5 rounded-full shadow-lg text-sm cursor-pointer">
             Start Testing →
           </button>
         </div>
@@ -283,10 +336,11 @@
     <footer class="relative z-10 px-6 py-8 mt-8 border-t border-slate-200 bg-white/50 backdrop-blur-sm">
       <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+            style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="4" width="20" height="14" rx="2" stroke="white" stroke-width="2"/>
-              <path d="M8 21h8M12 18v3" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <rect x="2" y="4" width="20" height="14" rx="2" stroke="white" stroke-width="2" />
+              <path d="M8 21h8M12 18v3" stroke="white" stroke-width="2" stroke-linecap="round" />
             </svg>
           </div>
           <span class="font-bold text-slate-800">Devicely</span>
@@ -298,10 +352,14 @@
   </div><!-- /wrapper -->
 
   <!-- Toast (same gradient as CTA) -->
-  <div id="toast" class="fixed bottom-7 right-7 z-50 text-white text-sm font-semibold px-5 py-3.5 rounded-2xl shadow-2xl pointer-events-none" style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+  <div id="toast"
+    class="fixed bottom-7 right-7 z-50 text-white text-sm font-semibold px-5 py-3.5 rounded-2xl shadow-2xl pointer-events-none"
+    style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">
   </div>
-
+  <script src="../lib/supabase.js"></script>
+  <script src="../js/dashboard.js"></script>
   <script>
+
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -310,13 +368,13 @@
     }
 
     function logout() {
-      showToast('👋  Logging out…');
+      showToast('👋 Logging out…');
       console.log('[Devicely] logout()');
       // window.location.href = '/login';
     }
 
     function openPreview(url) {
-      showToast('🖥  Opening preview…');
+      showToast('🖥 Opening preview…');
       console.log('[Devicely] openPreview()', url);
       // localStorage.setItem('previewURL', url);
       // window.location.href = 'preview.html';
@@ -332,7 +390,7 @@
         card.remove();
         refreshCount();
         checkEmpty();
-        showToast('🗑  Test deleted');
+        showToast('🗑 Test deleted');
       }, 350);
       console.log('[Devicely] deleteTest()', id);
     }
@@ -361,10 +419,11 @@
     }
 
     function showNewTest() {
-      showToast('🚀  Redirecting to new test…');
+      showToast('🚀 Redirecting to new test…');
       console.log('[Devicely] showNewTest()');
       // window.location.href = 'index.html';
     }
   </script>
 </body>
+
 </html>
